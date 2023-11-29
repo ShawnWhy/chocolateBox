@@ -33,6 +33,29 @@ let ribbon = null;
 let lid = null;
 let ribbonMixer = null;
 let GoldHeart = null;
+let chocolate1
+let chocolate2
+let chocolate3
+let chocolate4
+let chocolate5
+let chocolate6
+let chocolate7
+let chocolate8
+let chocolate9
+let chocolate10
+let chocolate11
+
+let Chocolateintersect1
+let Chocolateintersect2
+let Chocolateintersect3
+let Chocolateintersect4
+let Chocolateintersect5;
+let Chocolateintersect6;
+let Chocolateintersect7;
+let Chocolateintersect8;
+let Chocolateintersect9;
+let Chocolateintersect10;
+let Chocolateintersect11;
 
 const quotes = [
   "Words bounce. Words, if you let them, will do what they want to do and what they have to do.- Anne Carson",
@@ -55,20 +78,20 @@ window.addEventListener("resize", () => {
   sizes.height = window.innerHeight;
 
   // Update camera
-  camera.aspect = sizes.width / sizes.height;
-  camera.updateProjectionMatrix();
+  //   camera.aspect = sizes.width / sizes.height;
+  //   camera.updateProjectionMatrix();
 
   // Update renderer
   renderer.setSize(sizes.width, sizes.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  if (sizes.width > 860) {
-    camera.position.set(0, 1.5, -2);
-  } else if (sizes.width > 450) {
-    camera.position.set(0, 1.5, -2);
-  } else {
-    camera.position.set(0, 1.5, -2);
-  }
+  //   if (sizes.width > 860) {
+  //     camera.position.set(0, 1.5, -2);
+  //   } else if (sizes.width > 450) {
+  //     camera.position.set(0, 1.5, -2);
+  //   } else {
+  //     camera.position.set(0, 1.5, -2);
+  //   }
 });
 
 const mouse = new THREE.Vector2();
@@ -107,47 +130,63 @@ gltfLoader.load("/box2.glb", (gltf) => {
   // scene.add(chocolateBox.children[0]);
   // scene.add(chocolateBox.children[1])
   // scene.add(chocolateBox.children[2]);
-//   scene.add(chocolateBox.children[3]);
-//   scene.add(chocolateBox.children[4]);
-//   scene.add(chocolateBox.children[5]);
-//   scene.add(chocolateBox.children[6]);
-//   scene.add(chocolateBox.children[7]);
-//   scene.add(chocolateBox.children[8]);
-//   scene.add(chocolateBox.children[9]);
-//   scene.add(chocolateBox.children[10]);
-//   scene.add(chocolateBox.children[11]);
-//   scene.add(chocolateBox.children[12]);
-//   scene.add(chocolateBox.children[13]);
-// //   scene.add(chocolateBox.children[14]);
-//   scene.add(chocolateBox.children[15]);
-//           scene.add(chocolateBox.children[16]);
+  //   scene.add(chocolateBox.children[3]);
+  //   scene.add(chocolateBox.children[4]);
+  //   scene.add(chocolateBox.children[5]);
+  //   scene.add(chocolateBox.children[6]);
+  //   scene.add(chocolateBox.children[7]);
+  //   scene.add(chocolateBox.children[8]);
+  //   scene.add(chocolateBox.children[9]);
+  //   scene.add(chocolateBox.children[10]);
+  //   scene.add(chocolateBox.children[11]);
+  //   scene.add(chocolateBox.children[12]);
+  //   scene.add(chocolateBox.children[13]);
+  // //   scene.add(chocolateBox.children[14]);
+  //   scene.add(chocolateBox.children[15]);
+  //           scene.add(chocolateBox.children[16]);
 
-//                   scene.add(chocolateBox.children[17]);
+  //                   scene.add(chocolateBox.children[17]);
 
-//                           scene.add(chocolateBox.children[18]);
-  chocolateBox.remove(chocolateBox.children[0]);
-  chocolateBox.remove(chocolateBox.children[1]);
+  //                           scene.add(chocolateBox.children[18]);
+  //   chocolateBox.remove(chocolateBox.children[0]);
   chocolateBox.remove(chocolateBox.children[2]);
-                                  scene.add(chocolateBox);
+  //   chocolateBox.remove(chocolateBox.children[2]);
+  scene.add(chocolateBox);
 
+  var newchocolate = chocolateBox.children[5]
+  console.log("new chocolate")
+  console.log(newchocolate)
+
+     gsap.to(newchocolate.position, { duration: 1, y: 0.4 });
+//   gsap;
 
   // console.log(chocolateBox.children[0]);
 
-  chocolateBox.remove(chocolateBox.children[0]);
-  chocolateBox.remove(chocolateBox.children[1]);
-    chocolateBox.remove(chocolateBox.children[2]);
-        // chocolateBox.remove(chocolateBox.children[3]);
-
+  //   chocolateBox.remove(chocolateBox.children[0]);
+  //   chocolateBox.remove(chocolateBox.children[1]);
+  //     chocolateBox.remove(chocolateBox.children[2]);
+  // chocolateBox.remove(chocolateBox.children[3]);
 
   console.log(chocolateBox);
 });
-
+const color = 0xffffff;
+const skyColor = 0xb1e1ff; // light blue
+const groundColor = 0xb97a20; // brownish orange
+const intensity = 3;
+const light5 = new THREE.AmbientLight(color, intensity);
+const light4 = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+scene.add(light4);
 /**
  * Lights
  */
-// const ambientLight = new THREE.AmbientLight('#7FFFD4', .2)
-// scene.add(ambientLight)
-const directionalLight = new THREE.DirectionalLight("#F5F5DC", 2);
+const ambientLight = new THREE.AmbientLight("#7FFFD4", 1);
+scene.add(ambientLight);
+//light target
+const targetObject = new THREE.Object3D();
+scene.add(targetObject);
+console.log("target object");
+console.log(targetObject);
+const directionalLight = new THREE.DirectionalLight("#F5F5DC", 1);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.set(1024, 1024);
 directionalLight.shadow.camera.far = 15;
@@ -155,9 +194,10 @@ directionalLight.shadow.camera.left = -7;
 directionalLight.shadow.camera.top = 7;
 directionalLight.shadow.camera.right = 7;
 directionalLight.shadow.camera.bottom = -7;
-directionalLight.position.set(0, 5, 0);
+directionalLight.position.set(0, 7, -3);
+directionalLight.target = targetObject;
 scene.add(directionalLight);
-const directionalLight2 = new THREE.DirectionalLight("#5F9EA0", 1);
+const directionalLight2 = new THREE.DirectionalLight("#5F9EA0", 2);
 directionalLight2.castShadow = true;
 directionalLight2.shadow.mapSize.set(1024, 1024);
 directionalLight2.shadow.camera.far = 15;
@@ -165,7 +205,9 @@ directionalLight2.shadow.camera.left = -7;
 directionalLight2.shadow.camera.top = 7;
 directionalLight2.shadow.camera.right = 7;
 directionalLight2.shadow.camera.bottom = -7;
-directionalLight2.position.set(0, 2, 0);
+directionalLight2.position.set(-2, -2, 1);
+directionalLight2.target = targetObject;
+
 scene.add(directionalLight2);
 /**
  * Camera
@@ -179,13 +221,14 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.focus = 20;
 if (sizes.width > 860) {
-  camera.position.set(0, 1.5, -2);
+  camera.position.set(0.5, 3, 1);
 } else if (sizes.width > 450) {
   camera.position.set(0, 1.5, -2);
 } else {
   camera.position.set(0, 1.5, -2);
 }
 scene.add(camera);
+camera.target = targetObject;
 // Controls
 const controls = new OrbitControls(camera, canvas);
 // controls.target.set(4, 2, 0)
@@ -234,11 +277,47 @@ $(window).click(() => {
 const tick = () => {
   raycaster.setFromCamera(mouse, camera);
 
-  // if(plateArray.length>0){
+  if (chocolate1) {
+    Chocolateintersect1 = raycaster.intersectObjects(chocolate1);
+  }
+  if (chocolate2) {
+    Chocolateintersect2 = raycaster.intersectObjects(chocolate1);
+  }
+  if (chocolate3) {
+    Chocolateintersect3 = raycaster.intersectObjects(chocolate1);
+  }
+  if (chocolate4) {
+    Chocolateintersect4 = raycaster.intersectObjects(chocolate1);
+  }
+  if (chocolate5) {
+    Chocolateintersect5 = raycaster.intersectObjects(chocolate1);
+  }
+  if (chocolate6) {
+    Chocolateintersect6 = raycaster.intersectObjects(chocolate1);
+  }
+  if (chocolate7) {
+    Chocolateintersect7 = raycaster.intersectObjects(chocolate1);
+  }
+  if (chocolate8) {
+    Chocolateintersect8 = raycaster.intersectObjects(chocolate1);
+  }
+  if (chocolate9) {
+    Chocolateintersect9 = raycaster.intersectObjects(chocolate1);
+  }
+  if (chocolate10) {
+    Chocolateintersect10 = raycaster.intersectObjects(chocolate1);
+  }
 
-  //     plateIntersects = raycaster.intersectObjects(plateArray)
-
-  //     }
+  if (chocolate11) {
+    Chocolateintersect11 = raycaster.intersectObjects(chocolate1);
+  }
+  if(lid){
+    lidIntersects = raycaster.intersectObjects(lid)
+  }
+  if(ribbon){
+    RibbonIntersects = raycaster.intersectObject(ribbon)
+  }
+//   if()
 
   const elapsedTime = clock.getElapsedTime();
   const deltaTime = elapsedTime - oldElapsedTime;
