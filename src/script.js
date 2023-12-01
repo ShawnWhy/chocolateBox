@@ -25,7 +25,8 @@ const sphereGeometry = new THREE.SphereGeometry(1, 8, 8);
 let Chocolateintersects = [];
 let RibbonIntersects = [];
 let lidIntersects = [];
-let ribbonTrigger = "on";
+let ribbonTrigger = "off";
+let ribbonNudgeTrigger = "off";
 let lidTrigger = "off";
 let chocolatesTrigger = "off";
 let chocolateBox = null;
@@ -57,13 +58,24 @@ let Chocolateintersect9;
 let Chocolateintersect10;
 let Chocolateintersect11;
 
+let ribbonAnimation;
+
+
+
+
 const quotes = [
   "Words bounce. Words, if you let them, will do what they want to do and what they have to do.- Anne Carson",
   "To be running breathlessly, but not yet arrived, is itself delightful, a suspended moment of living hope. - Anne Carson",
   "As Sokrates tells it, your story begins the moment Eros enters you. That incursion is the biggest risk of your life. How you handle it is an index of the quality, wisdom, and decorum of the things inside you. As you handle it you come into contact with what is inside you, in a sudden and startling way. You perceive what you are, what you lack, what you could be.-Anne Carson",
   "For centuries poets, some poets, have tried to give a voice to the animals, and readers, some readers, have felt empathy and sorrow. If animals did have voices, and they could speak with the tongues of angels--at the very least with the tongues of angels--they would be unable to save themselves from us. What good would language do? Their mysterious otherness has not saved them, nor have their beautiful songs and coats and skins and shells and eyes. We discover the remarkable intelligence of the whale, the wolf, the elephant--it does not save them, nor does our awareness of the complexity of their lives. Their strength, their skills, their swiftness, the beauty of their flights. It matters not, it seems, whether they are large or small, proud or shy, docile or fierce, wild or domesticated, whether they nurse their young or brood patiently on eggs. If they eat meat, we decry their viciousness; if they eat grasses and seeds, we dismiss them as weak. There is not one of them, not even the songbird who cannot, who does not, conflict with man and his perceived needs and desires. St. Francis converted the wolf of Gubbio to reason, but he performed this miracle only once and as miracles go, it didn’t seem to capture the public’s fancy. Humans don’t want animals to reason with them. It would be a disturbing, unnerving, diminishing experience; it would bring about all manner of awkwardness and guilt.― Joy Williams",
   "Wouldn't it be wonderful if I won a helicopter in a crossword puzzle competition? There is not much hope though I am afraid, as they never give such practical prizes.-Leonora Carrington",
-];
+]
+// ;rgb(1, 0.06859685480594635, 0.048684362322092056);
+let transparentColor = new THREE.Color( "orange");
+let transparentMaterial = new THREE.MeshBasicMaterial({color:
+  transparentColor}
+);
+transparentMaterial.transparent= true;
 
 let colorfulMaterials = [
   new THREE.MeshStandardMaterial({ color: "#F3A56B" }),
@@ -127,37 +139,30 @@ gltfLoader.load("/box2.glb", (gltf) => {
   console.log(gltf);
   console.log(chocolateBox);
 
-  // scene.add(chocolateBox.children[0]);
-  // scene.add(chocolateBox.children[1])
-  // scene.add(chocolateBox.children[2]);
-  //   scene.add(chocolateBox.children[3]);
-  //   scene.add(chocolateBox.children[4]);
-  //   scene.add(chocolateBox.children[5]);
-  //   scene.add(chocolateBox.children[6]);
-  //   scene.add(chocolateBox.children[7]);
-  //   scene.add(chocolateBox.children[8]);
-  //   scene.add(chocolateBox.children[9]);
-  //   scene.add(chocolateBox.children[10]);
-  //   scene.add(chocolateBox.children[11]);
-  //   scene.add(chocolateBox.children[12]);
-  //   scene.add(chocolateBox.children[13]);
-  // //   scene.add(chocolateBox.children[14]);
-  //   scene.add(chocolateBox.children[15]);
-  //           scene.add(chocolateBox.children[16]);
+    
+    // console.log(mixer)
 
-  //                   scene.add(chocolateBox.children[17]);
+  ribbon = chocolateBox.children[0]
+  console.log(ribbon.children[1])
+  ribbon.children[1].material.transparent = true;
+  ribbon.children[1].material.opacity=.5;
 
-  //                           scene.add(chocolateBox.children[18]);
-  //   chocolateBox.remove(chocolateBox.children[0]);
-  chocolateBox.remove(chocolateBox.children[2]);
+
+  ribbonMixer = new THREE.AnimationMixer(ribbon);
+  ribbonAnimation = ribbonMixer.clipAction(gltf.animations[26]); 
+  ribbonAnimation.timeScale = .6;
+  ribbonAnimation.clampWhenFinished = true;
+  ribbonAnimation.setLoop(THREE.LoopOnce);
+  ribbonAnimation.play()
+  ribbonAnimation.paused = true;
+  ribbonAnimation.time = 0
+
+  
   //   chocolateBox.remove(chocolateBox.children[2]);
   scene.add(chocolateBox);
 
-  var newchocolate = chocolateBox.children[5]
-  console.log("new chocolate")
-  console.log(newchocolate)
 
-     gsap.to(newchocolate.position, { duration: 1, y: 0.4 });
+     
 //   gsap;
 
   // console.log(chocolateBox.children[0]);
@@ -255,6 +260,16 @@ let previousTime = 0;
 const raycaster = new THREE.Raycaster();
 
 $(window).click(() => {
+  if(RibbonIntersects.length>0){
+    // ribbonAnimation.play()
+    ribbonTrigger="on";
+    setTimeout(() => {
+      ribbon.children[1].material= transparentMaterial;
+      gsap.to(ribbon.position, { duration: .6, y: 1.5 });
+      gsap.to(ribbon.children[1].material,{duration:.5,opacity:0})
+      // console.log(ribbon.children[1].material)
+    }, 100);
+  }
   // if(intersects.length>0){
   //     if(play==="on"){
   //     createSingleSet(CANNON, THREE, intersects,defaultMaterial, singleGroup,scene, world, objectsToUpdate,plateArray)
@@ -324,7 +339,24 @@ const tick = () => {
   oldElapsedTime = elapsedTime;
 
   if (ribbonMixer) {
-    ribbonMixermixer.update(deltaTime);
+ if (RibbonIntersects.length > 0) {
+        ribbonNudgeTrigger = "on";
+      } else {
+        ribbonNudgeTrigger = "off";
+      }
+    ribbonMixer.update(deltaTime);
+
+           if (ribbonAnimation.time < .4 && ribbonNudgeTrigger == "on" && ribbonTrigger=="off") {
+             ribbonAnimation.time += 0.08;
+
+           } 
+           else if(ribbonAnimation.time < 1 && ribbonNudgeTrigger == "on" && ribbonTrigger=="on")
+           {
+            ribbonAnimation.time += 0.05;
+           }
+           else if (ribbonAnimation.time >= 0 && ribbonNudgeTrigger == "off" && ribbonTrigger =="off") {
+             ribbonAnimation.time -= 0.08;
+           }
   }
 
   controls.update();
