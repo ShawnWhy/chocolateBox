@@ -48,6 +48,22 @@ let chocolate8;
 let chocolate9;
 let chocolate10;
 let chocolate11;
+let chocolate12;
+
+let chocolate1Trigger = "on";
+let chocolate2Trigger = "on";
+let chocolate3Trigger = "on";
+let chocolate4Trigger = "on";
+let chocolate5Trigger = "on";
+let chocolate6Trigger = "on";
+let chocolate7Trigger = "on";
+let chocolate8Trigger = "on";
+let chocolate9Trigger = "on";
+let chocolate10Trigger = "on";
+let chocolate11Trigger = "on";
+let chocolate12Trigger = "on";
+
+let goldHeartTrigger = "off"
 
 let Chocolateintersect1;
 let Chocolateintersect2;
@@ -60,6 +76,8 @@ let Chocolateintersect8;
 let Chocolateintersect9;
 let Chocolateintersect10;
 let Chocolateintersect11;
+let Chocolateintersect12;
+let goldHeartIntersects;
 
 let ribbonAnimation;
 
@@ -78,9 +96,53 @@ let transparentMaterial = new THREE.MeshBasicMaterial({
 let transparentMaterial2 = new THREE.MeshBasicMaterial({
   color: transparentColor,
 });
+
+let transparentMaterialchocolate1 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+
+let transparentMaterialchocolate2 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+
+let transparentMaterialchocolate3 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+
+let transparentMaterialchocolate4 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+
+let transparentMaterialchocolate5 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+
+let transparentMaterialchocolate6 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+
+let transparentMaterialchocolate7 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+
+let transparentMaterialchocolate8 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+let transparentMaterialchocolate9 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+let transparentMaterialchocolate10 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+let transparentMaterialchocolate11 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+let transparentMaterialchocolate12 = new THREE.MeshBasicMaterial({
+  color: transparentColor,
+});
+
 transparentMaterial.transparent = true;
 transparentMaterial2.transparent = true;
-
 
 let colorfulMaterials = [
   new THREE.MeshStandardMaterial({ color: "#F3A56B" }),
@@ -119,11 +181,134 @@ window.addEventListener("mousemove", (event) => {
   mouse.x = (event.clientX / sizes.width) * 2 - 1;
   mouse.y = -(event.clientY / sizes.height) * 2 + 1;
 
-  console.log(lidIntersects);
-  console.log(lidTrigger);
+  // console.log(lidIntersects);
+  // console.log(lidTrigger);
+
+  
+  if (
+    goldHeartIntersects.length > 0 &&
+    chocolatesTrigger === "on" &&
+    goldHeartTrigger ==="on"
+
+  ) {
+    gsap.to(GoldHeart.position, { duration: 0.5, y: .7 });
+    
+  } else {
+    gsap.to(GoldHeart.position, { duration: 0.5, y: .2 });
+  }
+  
+
+  if (
+    Chocolateintersect1.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate1Trigger === "on"
+  ) {
+    gsap.to(chocolate1.position, { duration: 0.5, y: 0 });
+  } else {
+    gsap.to(chocolate1.position, { duration: 0.5, y:  -0.4 });
+  }
+  if (
+    Chocolateintersect2.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate2Trigger === "on"
+  ) {
+    gsap.to(chocolate2.position, { duration: 0.5, y: 0 });
+  } else {
+    gsap.to(chocolate2.position, { duration: 0.5, y:  -0.4 });
+  }
+  if (
+    Chocolateintersect3.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate3Trigger === "on"
+  ) {
+    gsap.to(chocolate3.position, { duration: 0.5, y: 0 });
+  } else {
+    gsap.to(chocolate3.position, { duration: 0.5, y:  -0.4 });
+  }
+  if (
+    Chocolateintersect4.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate4Trigger === "on"
+  ) {
+    console.log(chocolate4Trigger)
+    gsap.to(chocolate4.position, { duration: 0.5, y: 0 });
+  } else {
+    gsap.to(chocolate4.position, { duration: 0.5, y:  -0.4 });
+  }
+  if (
+    Chocolateintersect5.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate5Trigger === "on"
+  ) {
+    gsap.to(chocolate5.position, { duration: 0.5, y: 0 });
+  } else {
+    gsap.to(chocolate5.position, { duration: 0.5, y:  -0.4 });
+  }
+  if (
+    Chocolateintersect6.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate6Trigger === "on"
+  ) {
+    gsap.to(chocolate6.position, { duration: 0.5, y: 0 });
+  } else {
+    gsap.to(chocolate6.position, { duration: 0.5, y:  -0.4 });
+  }
+  if (
+    Chocolateintersect7.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate7Trigger === "on"
+  ) {
+    gsap.to(chocolate7.position, { duration: 0.5, y: 0 });
+  } else {
+    gsap.to(chocolate7.position, { duration: 0.5, y:  -0.4 });
+  }
+  if (
+    Chocolateintersect8.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate8Trigger === "on"
+  ) {
+    gsap.to(chocolate8.position, { duration: 0.5, y: 0 });
+  } else {
+    gsap.to(chocolate8.position, { duration: 0.5, y:  -0.4 });
+  }
+  if (
+    Chocolateintersect9.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate9Trigger === "on"
+  ) {
+    gsap.to(chocolate9.position, { duration: 0.5, y: 0 });
+  } else {
+    gsap.to(chocolate9.position, { duration: 0.5, y:  -0.4 });
+  }
+  if (
+    Chocolateintersect10.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate10Trigger === "on"
+  ) {
+    gsap.to(chocolate10.position, { duration: 0.5, y: 0 });
+  } else {
+    gsap.to(chocolate10.position, { duration: 0.5, y:  -0.4 });
+  }
+  if (
+    Chocolateintersect11.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate11Trigger === "on"
+  ) {
+    gsap.to(chocolate11.position, { duration: 0.5, y: 0 });
+  } else {
+    gsap.to(chocolate11.position, { duration: 0.5, y:  -0.4 });
+  }
+  if (
+    Chocolateintersect12.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate12Trigger === "on"
+  ) {
+    gsap.to(chocolate12.position, { duration: 0.5, y: 0.2 });
+  } else {
+    gsap.to(chocolate12.position, { duration: 0.5, y: 0 });
+  }
 
   if (lidIntersects.length > 0 && lidTrigger === "on") {
-    console.log("lidup");
     gsap.to(lid.position, { duration: 0.5, y: 0.2 });
   } else {
     gsap.to(lid.position, { duration: 0.5, y: 0 });
@@ -151,7 +336,7 @@ window.addEventListener("mousemove", (event) => {
 
 gltfLoader.load("/box2.glb", (gltf) => {
   chocolateBox = gltf.scene;
-  console.log(gltf);
+  // console.log(gltf);
   console.log(chocolateBox);
 
   // console.log(mixer)
@@ -159,7 +344,19 @@ gltfLoader.load("/box2.glb", (gltf) => {
   ribbon = chocolateBox.children[0];
   bow = chocolateBox.children[4];
   lid = chocolateBox.children[2];
-
+  chocolate1 = chocolateBox.children[7];
+  chocolate2 = chocolateBox.children[14];
+  chocolate3 = chocolateBox.children[6];
+  chocolate4 = chocolateBox.children[8];
+  chocolate5 = chocolateBox.children[15];
+  GoldHeart = chocolate5.children[3]
+  chocolate6 = chocolateBox.children[9];
+  chocolate7 = chocolateBox.children[10];
+  chocolate8 = chocolateBox.children[11];
+  chocolate9 = chocolateBox.children[12];
+  chocolate10 = chocolateBox.children[13];
+  chocolate11 = chocolateBox.children[17];
+  chocolate12 = chocolateBox.children[16];
 
   ribbonMixer = new THREE.AnimationMixer(ribbon);
   ribbonAnimation = ribbonMixer.clipAction(gltf.animations[26]);
@@ -173,7 +370,7 @@ gltfLoader.load("/box2.glb", (gltf) => {
 
   //   chocolateBox.remove(chocolateBox.children[2]);
   scene.add(chocolateBox);
-  console.log(lid);
+  // console.log(lid);
 
   //   gsap;
 
@@ -184,7 +381,7 @@ gltfLoader.load("/box2.glb", (gltf) => {
   //     chocolateBox.remove(chocolateBox.children[2]);
   // chocolateBox.remove(chocolateBox.children[3]);
 
-  console.log(chocolateBox);
+  // console.log(chocolateBox);
 });
 const color = 0xffffff;
 const skyColor = 0xb1e1ff; // light blue
@@ -201,8 +398,8 @@ scene.add(ambientLight);
 //light target
 const targetObject = new THREE.Object3D();
 scene.add(targetObject);
-console.log("target object");
-console.log(targetObject);
+// console.log("target object");
+// console.log(targetObject);
 const directionalLight = new THREE.DirectionalLight("#F5F5DC", 1);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.set(1024, 1024);
@@ -273,15 +470,283 @@ let previousTime = 0;
 const raycaster = new THREE.Raycaster();
 
 $(window).click(() => {
+  //chocolate1
+
+  if (Chocolateintersect1.length > 0 && chocolatesTrigger === "on") {
+    // console.log(chocolate1);
+    chocolate1.children[6].children[0].material = transparentMaterialchocolate1;
+    chocolate1.children[6].children[1].material = transparentMaterialchocolate1;
+    transparentMaterialchocolate1.transparent = true;
+    gsap.to(chocolate1.position, { duration: 0.5, y: -0.4 });
+    gsap.to(chocolate1.children[6].position, {
+      duration: 0.3,
+      y: 2,
+    });
+    gsap.to(chocolate1.children[6].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate1.children[6].children[1].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    chocolate1Trigger = "off";
+  }
+
+  //chocolate2
+
+  if (Chocolateintersect2.length > 0 && chocolatesTrigger === "on") {
+    console.log(chocolate2);
+    chocolate2.children[3].children[0].material = transparentMaterialchocolate2;
+    chocolate2.children[3].children[1].material = transparentMaterialchocolate2;
+    transparentMaterialchocolate2.transparent = true;
+    gsap.to(chocolate2.position, { duration: 0.5, y: -0.4 });
+    gsap.to(chocolate2.children[3].position, {
+      duration: 0.3,
+      y: 2,
+    });
+    gsap.to(chocolate2.children[3].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate2.children[3].children[1].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    chocolate2Trigger = "off";
+  }
+
+  //chocolare3
+  if (Chocolateintersect3.length > 0 && chocolatesTrigger === "on") {
+    console.log(chocolate3);
+    chocolate3.children[3].children[0].material = transparentMaterialchocolate3;
+    chocolate3.children[3].children[1].material = transparentMaterialchocolate3;
+    transparentMaterialchocolate3.transparent = true;
+    gsap.to(chocolate3.position, { duration: 0.5, y: -0.4 });
+    gsap.to(chocolate3.children[3].position, {
+      duration: 0.3,
+      y: 2,
+    });
+    gsap.to(chocolate3.children[3].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate3.children[3].children[1].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    chocolate3Trigger = "off";
+  }
+
+  //chocolate4
+  if (Chocolateintersect4.length > 0 && chocolatesTrigger === "on") {
+    console.log(chocolate4);
+    chocolate4.children[0].children[0].material = transparentMaterialchocolate4;
+    chocolate4.children[0].children[1].material = transparentMaterialchocolate4;
+    transparentMaterialchocolate4.transparent = true;
+    gsap.to(chocolate4.position, { duration: 0.5, y: -0.4 });
+    gsap.to(chocolate4.children[0].position, {
+      duration: 0.3,
+      y: 2,
+    });
+    gsap.to(chocolate4.children[0].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate4.children[0].children[1].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    chocolate4Trigger = "off";
+  }
+
+  //chocolate5
+  if (Chocolateintersect5.length > 0 && chocolatesTrigger === "on") {
+    // console.log(chocolate5);
+    chocolate5.children[2].children[0].material = transparentMaterialchocolate5;
+    chocolate5.children[2].children[1].material = transparentMaterialchocolate5;
+    transparentMaterialchocolate5.transparent = true;
+    gsap.to(chocolate5.position, { duration: 0.5, y: -0.4 });
+    gsap.to(chocolate5.children[2].position, {
+      duration: 0.3,
+      y: 2,
+    });
+    gsap.to(chocolate5.children[2].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate5.children[2].children[1].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    chocolate5Trigger = "off";
+    goldHeartTrigger = "on";
+  }
+
+  //chocolate6
+  if (Chocolateintersect6.length > 0 && chocolatesTrigger === "on") {
+    // console.log(chocolate6);
+    chocolate6.children[3].children[0].material = transparentMaterialchocolate6;
+    chocolate6.children[3].material = transparentMaterialchocolate6;
+    transparentMaterialchocolate6.transparent = true;
+    gsap.to(chocolate6.position, { duration: 0.5, y: -0.4 });
+    gsap.to(chocolate6.children[3].position, {
+      duration: 0.3,
+      y: 2,
+    });
+    gsap.to(chocolate6.children[3].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate6.children[3].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    chocolate6Trigger = "off";
+  }
+
+  //chocolate7
+  if (Chocolateintersect7.length > 0 && chocolatesTrigger === "on") {
+    console.log(chocolate7);
+    chocolate7.children[2].children[0].material = transparentMaterialchocolate7;
+    chocolate7.children[2].children[1].material = transparentMaterialchocolate7;
+    transparentMaterialchocolate7.transparent = true;
+    gsap.to(chocolate7.position, { duration: 0.5, y: -0.4 });
+    gsap.to(chocolate7.children[2].children[1].position, {
+      duration: 0.3,
+      y: 2,
+    });
+    gsap.to(chocolate7.children[2].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate7.children[3].children[1].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    chocolate7Trigger = "off";
+  }
+  //chocolate8
+  if (Chocolateintersect8.length > 0 && chocolatesTrigger === "on") {
+    // console.log(chocolate8);
+    chocolate8.children[2].children[0].material = transparentMaterialchocolate8;
+    chocolate8.children[2].children[1].material = transparentMaterialchocolate8;
+    transparentMaterialchocolate8.transparent = true;
+    gsap.to(chocolate8.position, { duration: 0.5, y: -0.4 });
+    gsap.to(chocolate8.children[2].position, {
+      duration: 0.3,
+      y: 2,
+    });
+    gsap.to(chocolate8.children[2].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate8.children[2].children[1].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    chocolate8Trigger = "off";
+  }
+
+  //chocolate9
+  if (Chocolateintersect9.length > 0 && chocolatesTrigger === "on") {
+    chocolate9.children[3].children[0].material = transparentMaterialchocolate9;
+    chocolate9.children[3].children[1].material = transparentMaterialchocolate9;
+    transparentMaterialchocolate9.transparent = true;
+    gsap.to(chocolate9.position, { duration: 0.5, y: -0.4 });
+    gsap.to(chocolate9.children[3].position, {
+      duration: 0.3,
+      y: 2,
+    });
+    gsap.to(chocolate9.children[3].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate9.children[3].children[1].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    chocolate9Trigger = "off";
+  }
+
+  //chocolate10
+  if (Chocolateintersect10.length > 0 && chocolatesTrigger === "on") {
+    console.log(chocolate10);
+    chocolate10.children[4].children[0].material =
+      transparentMaterialchocolate10;
+    chocolate10.children[4].children[1].material =
+      transparentMaterialchocolate10;
+    transparentMaterialchocolate10.transparent = true;
+    gsap.to(chocolate10.position, { duration: 0.5, y: -0.4 });
+    gsap.to(chocolate10.children[4].position, {
+      duration: 0.3,
+      y: 2,
+    });
+    gsap.to(chocolate10.children[4].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate10.children[4].children[1].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    chocolate10Trigger = "off";
+  }
+  //chocolate11
+  if (Chocolateintersect11.length > 0 && chocolatesTrigger === "on") {
+    chocolate11.children[3].children[0].material =
+      transparentMaterialchocolate11;
+    chocolate11.children[3].children[1].material =
+      transparentMaterialchocolate11;
+    transparentMaterialchocolate11.transparent = true;
+    gsap.to(chocolate11.position, { duration: 0.5, y: -0.4 });
+    gsap.to(chocolate11.children[3].position, {
+      duration: 0.3,
+      y: 2,
+    });
+    gsap.to(chocolate11.children[3].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate11.children[3].children[1].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+
+    chocolate11Trigger = "off";
+  }
+
+  //chocolate12
+  if (Chocolateintersect12.length > 0 && chocolatesTrigger === "on") {
+    console.log(chocolate12);
+    chocolate12.children[3].children[0].material =
+      transparentMaterialchocolate12;
+    chocolate12.children[3].material = transparentMaterialchocolate12;
+    transparentMaterialchocolate12.transparent = true;
+    gsap.to(chocolate12.position, { duration: 0.5, y: 0 });
+    gsap.to(chocolate12.children[3].position, {
+      duration: 0.3,
+      y: 0.5,
+    });
+    gsap.to(chocolate12.children[3].children[0].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+    gsap.to(chocolate12.children[3].material, {
+      duration: 0.3,
+      opacity: 0,
+    });
+
+    chocolate12Trigger = "off";
+  }
+
   if (lidIntersects.length > 0 && lidTrigger === "on") {
-
     gsap.to(lid.position, { duration: 0.8, y: 1.5 });
-         setTimeout(() => {
-            lid.material = transparentMaterial2;
-             gsap.to(lid.material, { duration: .8, opacity: 0 });
-
-
-         }, 200);
+    setTimeout(() => {
+      lid.material = transparentMaterial2;
+      gsap.to(lid.material, { duration: 0.8, opacity: 0 });
+      chocolatesTrigger = "on";
+    }, 200);
   }
   if (RibbonIntersects.length > 0) {
     // ribbonAnimation.play()
@@ -293,8 +758,6 @@ $(window).click(() => {
       gsap.to(bow.position, { duration: 0.8, y: 1.5 });
 
       gsap.to(ribbon.children[1].material, { duration: 0.8, opacity: 0 });
-
- 
 
       // console.log(ribbon.children[1].material)
     }, 10);
@@ -328,35 +791,38 @@ const tick = () => {
     Chocolateintersect1 = raycaster.intersectObject(chocolate1);
   }
   if (chocolate2) {
-    Chocolateintersect2 = raycaster.intersectObject(chocolate1);
+    Chocolateintersect2 = raycaster.intersectObject(chocolate2);
   }
   if (chocolate3) {
-    Chocolateintersect3 = raycaster.intersectObject(chocolate1);
+    Chocolateintersect3 = raycaster.intersectObject(chocolate3);
   }
   if (chocolate4) {
-    Chocolateintersect4 = raycaster.intersectObject(chocolate1);
+    Chocolateintersect4 = raycaster.intersectObject(chocolate4);
   }
   if (chocolate5) {
-    Chocolateintersect5 = raycaster.intersectObjects(chocolate1);
+    Chocolateintersect5 = raycaster.intersectObject(chocolate5);
   }
   if (chocolate6) {
-    Chocolateintersect6 = raycaster.intersectObject(chocolate1);
+    Chocolateintersect6 = raycaster.intersectObject(chocolate6);
   }
   if (chocolate7) {
-    Chocolateintersect7 = raycaster.intersectObjects(chocolate1);
+    Chocolateintersect7 = raycaster.intersectObject(chocolate7);
   }
   if (chocolate8) {
-    Chocolateintersect8 = raycaster.intersectObject(chocolate1);
+    Chocolateintersect8 = raycaster.intersectObject(chocolate8);
   }
   if (chocolate9) {
-    Chocolateintersect9 = raycaster.intersectObject(chocolate1);
+    Chocolateintersect9 = raycaster.intersectObject(chocolate9);
   }
   if (chocolate10) {
-    Chocolateintersect10 = raycaster.intersectObject(chocolate1);
+    Chocolateintersect10 = raycaster.intersectObject(chocolate10);
   }
 
   if (chocolate11) {
-    Chocolateintersect11 = raycaster.intersectObject(chocolate1);
+    Chocolateintersect11 = raycaster.intersectObject(chocolate11);
+  }
+  if (chocolate12) {
+    Chocolateintersect12 = raycaster.intersectObject(chocolate12);
   }
   if (lid) {
     lidIntersects = raycaster.intersectObject(lid);
@@ -364,6 +830,10 @@ const tick = () => {
   if (ribbon) {
     RibbonIntersects = raycaster.intersectObject(ribbon);
   }
+
+    if (GoldHeart) {
+      goldHeartIntersects = raycaster.intersectObject(GoldHeart);
+    }
   //   if()
 
   const elapsedTime = clock.getElapsedTime();
