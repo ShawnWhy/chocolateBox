@@ -5,10 +5,126 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { SphereGeometry, TextureLoader, CubeTextureLoader } from "three";
 import $ from "./Jquery";
 import gsap from "gsap";
+
+var mainContainer = $("canvas")
+let mouseX
+let mouseY
 const sizes = {
   width: window.innerWidth,
   height: window.innerHeight,
 };
+      console.log(mainContainer);
+
+function rainHearts(){
+
+    var rainBoxHeight = mainContainer[0].getBoundingClientRect().height;
+    var cards = $(".heartContainer");
+    console.log('rainBoxHeight')
+    console.log(rainBoxHeight)
+    // console.log(cards)
+    cards.each(function (index, value) {
+      let tempTop = $(value).css("top");
+      console.log(tempTop)
+
+      tempTop = parseFloat(tempTop.split("px")[0]);
+      console.log("temp Top")
+      console.log(tempTop)
+      let newTop = 0;
+
+      if (tempTop <= rainBoxHeight) {
+        // console.log("eat 1")
+        newTop = tempTop + 15;
+        $(value).css("top", newTop + "px");
+
+      } else {
+        $(value).remove()
+      }
+    });
+  }
+  function startHearts() {
+    createHearts();
+    var heartInterval = setInterval(() => {
+      rainHearts();
+    }, 20);
+    setTimeout(() => {
+      clearInterval(heartInterval);
+      $(".heartContainer").remove();
+    }, 5000);
+  }
+
+function createHearts() {
+  console.log("creating hearts")
+  for (let i = 0; i < 20; i++) {
+     
+       let randnumber = Math.floor(Math.random() * 80 + 10);
+       let randnumber2 = Math.floor(Math.random() * 100 );
+       let card = $("<div>");
+       let cardFront = $("<div>");
+       let cardBack = $("<div>");
+       cardFront.addClass("heartFront");
+       cardBack.addClass("heartBack");
+       card.addClass("heartContainer");
+       card.append(cardFront);
+       card.append(cardBack);
+       card.css("left", randnumber + "%");
+       card.css("top", randnumber2 + "px");
+setTimeout(() => {
+  $("body").append(card);
+}, 30 * i);
+  }
+}
+
+function createStars(mouseX, mouseY) {
+  console.log("createStars")
+  let randomColor = function getRandomColor() {
+    var letters = "0123456789ABCDEF";
+    var color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  var randomNumber = Math.floor(Math.random() * 20);
+
+  for (var i = 0; i < randomNumber; i++) {
+    let size = Math.floor(Math.random() * 30 + 2);
+    let rotation;
+    let left = Math.floor(Math.random() * 100-50);
+    let top = Math.floor(Math.random() * 100-50);
+
+    let randid = Math.floor(Math.random() * 255);
+
+    var star = $("<div>");
+    $(star).addClass("star");
+    $(star).css("width", size + "px");
+    $(star).css("transform", "rotate(" + rotation + "deg)");
+    $(star.css("top", mouseY + top + "px"));
+    $(star.css("left", mouseX + left + "px"));
+
+    $(star).html(
+      "<svg id=" +
+        randid +
+        ' class="star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 259.28 246.36"><defs><style>.cls-' +
+        randid +
+        "{fill:" +
+        randomColor() +';fill-rule:evenodd;}</style></defs><polygon class="cls-' +
+        randid +
+        '" points="91.92 84.56 0 96.65 71.55 155.61 47.81 246.36 129.28 202.11 211.47 246.36 187.73 155.61 259.28 96.65 166.97 85.03 130.01 0 91.92 84.56"/></g></g></svg>'
+    );
+        $('body').append(star);
+
+  }
+  setTimeout(() => {
+    var starArray = $(".star")
+      starArray.each(function (index, value) {
+        let opacity = $(value).css("opacity");
+        if (opacity==0) {
+          $(value).remove();
+        }
+      });
+  }, 1000);
+}
 const gltfLoader = new GLTFLoader();
 const textureLoader = new THREE.TextureLoader();
 
@@ -36,6 +152,7 @@ let lid = null;
 let bow = null;
 let ribbonMixer = null;
 let GoldHeart = null;
+let lidNudgeTrigger = "on";
 
 let chocolate1;
 let chocolate2;
@@ -63,7 +180,7 @@ let chocolate10Trigger = "on";
 let chocolate11Trigger = "on";
 let chocolate12Trigger = "on";
 
-let goldHeartTrigger = "off"
+let goldHeartTrigger = "off";
 
 let Chocolateintersect1;
 let Chocolateintersect2;
@@ -181,22 +298,21 @@ window.addEventListener("mousemove", (event) => {
   mouse.x = (event.clientX / sizes.width) * 2 - 1;
   mouse.y = -(event.clientY / sizes.height) * 2 + 1;
 
+  mouseX = event.clientX;
+  mouseY = event.clientY;
+
   // console.log(lidIntersects);
   // console.log(lidTrigger);
 
-  
   if (
     goldHeartIntersects.length > 0 &&
     chocolatesTrigger === "on" &&
-    goldHeartTrigger ==="on"
-
+    goldHeartTrigger === "on"
   ) {
-    gsap.to(GoldHeart.position, { duration: 0.5, y: .7 });
-    
+    gsap.to(GoldHeart.position, { duration: 0.5, y: 0.7 });
   } else {
-    gsap.to(GoldHeart.position, { duration: 0.5, y: .2 });
+    gsap.to(GoldHeart.position, { duration: 0.5, y: 0.2 });
   }
-  
 
   if (
     Chocolateintersect1.length > 0 &&
@@ -205,7 +321,7 @@ window.addEventListener("mousemove", (event) => {
   ) {
     gsap.to(chocolate1.position, { duration: 0.5, y: 0 });
   } else {
-    gsap.to(chocolate1.position, { duration: 0.5, y:  -0.4 });
+    gsap.to(chocolate1.position, { duration: 0.5, y: -0.4 });
   }
   if (
     Chocolateintersect2.length > 0 &&
@@ -214,7 +330,7 @@ window.addEventListener("mousemove", (event) => {
   ) {
     gsap.to(chocolate2.position, { duration: 0.5, y: 0 });
   } else {
-    gsap.to(chocolate2.position, { duration: 0.5, y:  -0.4 });
+    gsap.to(chocolate2.position, { duration: 0.5, y: -0.4 });
   }
   if (
     Chocolateintersect3.length > 0 &&
@@ -223,17 +339,17 @@ window.addEventListener("mousemove", (event) => {
   ) {
     gsap.to(chocolate3.position, { duration: 0.5, y: 0 });
   } else {
-    gsap.to(chocolate3.position, { duration: 0.5, y:  -0.4 });
+    gsap.to(chocolate3.position, { duration: 0.5, y: -0.4 });
   }
   if (
     Chocolateintersect4.length > 0 &&
     chocolatesTrigger === "on" &&
     chocolate4Trigger === "on"
   ) {
-    console.log(chocolate4Trigger)
+    console.log(chocolate4Trigger);
     gsap.to(chocolate4.position, { duration: 0.5, y: 0 });
   } else {
-    gsap.to(chocolate4.position, { duration: 0.5, y:  -0.4 });
+    gsap.to(chocolate4.position, { duration: 0.5, y: -0.4 });
   }
   if (
     Chocolateintersect5.length > 0 &&
@@ -242,7 +358,7 @@ window.addEventListener("mousemove", (event) => {
   ) {
     gsap.to(chocolate5.position, { duration: 0.5, y: 0 });
   } else {
-    gsap.to(chocolate5.position, { duration: 0.5, y:  -0.4 });
+    gsap.to(chocolate5.position, { duration: 0.5, y: -0.4 });
   }
   if (
     Chocolateintersect6.length > 0 &&
@@ -251,7 +367,7 @@ window.addEventListener("mousemove", (event) => {
   ) {
     gsap.to(chocolate6.position, { duration: 0.5, y: 0 });
   } else {
-    gsap.to(chocolate6.position, { duration: 0.5, y:  -0.4 });
+    gsap.to(chocolate6.position, { duration: 0.5, y: -0.4 });
   }
   if (
     Chocolateintersect7.length > 0 &&
@@ -260,7 +376,7 @@ window.addEventListener("mousemove", (event) => {
   ) {
     gsap.to(chocolate7.position, { duration: 0.5, y: 0 });
   } else {
-    gsap.to(chocolate7.position, { duration: 0.5, y:  -0.4 });
+    gsap.to(chocolate7.position, { duration: 0.5, y: -0.4 });
   }
   if (
     Chocolateintersect8.length > 0 &&
@@ -269,7 +385,7 @@ window.addEventListener("mousemove", (event) => {
   ) {
     gsap.to(chocolate8.position, { duration: 0.5, y: 0 });
   } else {
-    gsap.to(chocolate8.position, { duration: 0.5, y:  -0.4 });
+    gsap.to(chocolate8.position, { duration: 0.5, y: -0.4 });
   }
   if (
     Chocolateintersect9.length > 0 &&
@@ -278,7 +394,7 @@ window.addEventListener("mousemove", (event) => {
   ) {
     gsap.to(chocolate9.position, { duration: 0.5, y: 0 });
   } else {
-    gsap.to(chocolate9.position, { duration: 0.5, y:  -0.4 });
+    gsap.to(chocolate9.position, { duration: 0.5, y: -0.4 });
   }
   if (
     Chocolateintersect10.length > 0 &&
@@ -287,7 +403,7 @@ window.addEventListener("mousemove", (event) => {
   ) {
     gsap.to(chocolate10.position, { duration: 0.5, y: 0 });
   } else {
-    gsap.to(chocolate10.position, { duration: 0.5, y:  -0.4 });
+    gsap.to(chocolate10.position, { duration: 0.5, y: -0.4 });
   }
   if (
     Chocolateintersect11.length > 0 &&
@@ -296,7 +412,7 @@ window.addEventListener("mousemove", (event) => {
   ) {
     gsap.to(chocolate11.position, { duration: 0.5, y: 0 });
   } else {
-    gsap.to(chocolate11.position, { duration: 0.5, y:  -0.4 });
+    gsap.to(chocolate11.position, { duration: 0.5, y: -0.4 });
   }
   if (
     Chocolateintersect12.length > 0 &&
@@ -308,38 +424,18 @@ window.addEventListener("mousemove", (event) => {
     gsap.to(chocolate12.position, { duration: 0.5, y: 0 });
   }
 
-  if (lidIntersects.length > 0 && lidTrigger === "on") {
-    gsap.to(lid.position, { duration: 0.5, y: 0.2 });
-  } else {
-    gsap.to(lid.position, { duration: 0.5, y: 0 });
+  if (lidNudgeTrigger == "on") {
+    if (lidIntersects.length > 0 && lidTrigger === "on") {
+      gsap.to(lid.position, { duration: 0.5, y: 0.2 });
+    } else {
+      gsap.to(lid.position, { duration: 0.5, y: 0 });
+    }
   }
 });
 
-// gltfLoader.load("/teaset2.glb", (gltf) => {
-//   teaset = gltf.scene;
-//   console.log(teaset);
-//   // teaset.scale.set(0.25, 0.25, 0.25)
-//   cups[1] = teaset.children[4];
-//   cups[2] = teaset.children[2];
-//   cups[3] = teaset.children[3];
-//   cups[4] = teaset.children[7];
-//   cups[5] = teaset.children[5];
-//   cups[6] = teaset.children[6];
-//   plates[1] = teaset.children[13];
-//   plates[2] = teaset.children[12];
-//   plates[3] = teaset.children[10];
-//   plates[4] = teaset.children[9];
-//   plates[5] = teaset.children[8];
-//   plates[6] = teaset.children[14];
-//   scene.add(teaset);
-// });
-
 gltfLoader.load("/box2.glb", (gltf) => {
   chocolateBox = gltf.scene;
-  // console.log(gltf);
   console.log(chocolateBox);
-
-  // console.log(mixer)
 
   ribbon = chocolateBox.children[0];
   bow = chocolateBox.children[4];
@@ -349,7 +445,10 @@ gltfLoader.load("/box2.glb", (gltf) => {
   chocolate3 = chocolateBox.children[6];
   chocolate4 = chocolateBox.children[8];
   chocolate5 = chocolateBox.children[15];
-  GoldHeart = chocolate5.children[3]
+  GoldHeart = chocolate5.children[3];
+  console.log(GoldHeart);
+  GoldHeart.material.color = new THREE.Color("gold");
+  GoldHeart.material.metalness = 0.9;
   chocolate6 = chocolateBox.children[9];
   chocolate7 = chocolateBox.children[10];
   chocolate8 = chocolateBox.children[11];
@@ -368,20 +467,7 @@ gltfLoader.load("/box2.glb", (gltf) => {
 
   ribbonAnimation.paused = true;
 
-  //   chocolateBox.remove(chocolateBox.children[2]);
   scene.add(chocolateBox);
-  // console.log(lid);
-
-  //   gsap;
-
-  // console.log(chocolateBox.children[0]);
-
-  //   chocolateBox.remove(chocolateBox.children[0]);
-  //   chocolateBox.remove(chocolateBox.children[1]);
-  //     chocolateBox.remove(chocolateBox.children[2]);
-  // chocolateBox.remove(chocolateBox.children[3]);
-
-  // console.log(chocolateBox);
 });
 const color = 0xffffff;
 const skyColor = 0xb1e1ff; // light blue
@@ -398,8 +484,6 @@ scene.add(ambientLight);
 //light target
 const targetObject = new THREE.Object3D();
 scene.add(targetObject);
-// console.log("target object");
-// console.log(targetObject);
 const directionalLight = new THREE.DirectionalLight("#F5F5DC", 1);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.set(1024, 1024);
@@ -443,6 +527,69 @@ camera.position.set(1, 3, 2);
 //   camera.position.set(0, 1.5, -2);
 // }
 scene.add(camera);
+
+var listener = new THREE.AudioListener();
+camera.add(listener);
+
+var lidSound = new THREE.Audio(listener);
+
+var lidSoundLoader = new THREE.AudioLoader();
+
+//Load a sound and set it as the Audio object's buffer
+lidSoundLoader.load("sounds/ribbon.mp3", function (buffer) {
+  lidSound.setBuffer(buffer);
+  lidSound.setLoop(false);
+  lidSound.setVolume(0.2);
+});
+
+////////////
+
+var ribbonSound = new THREE.Audio(listener);
+
+var ribbonSoundLoader = new THREE.AudioLoader();
+
+//Load a sound and set it as the Audio object's buffer
+ribbonSoundLoader.load("sounds/ribbon.mp3", function (buffer) {
+  ribbonSound.setBuffer(buffer);
+  ribbonSound.setLoop(false);
+  ribbonSound.setVolume(0.2);
+});
+
+/////////
+var eatSound1 = new THREE.Audio(listener);
+
+var eatSoundLoader1 = new THREE.AudioLoader();
+
+//Load a sound and set it as the Audio object's buffer
+eatSoundLoader1.load("sounds/eat1.wav", function (buffer) {
+  eatSound1.setBuffer(buffer);
+  eatSound1.setLoop(false);
+  eatSound1.setVolume(0.2);
+});
+
+/////////
+var eatSound2 = new THREE.Audio(listener);
+
+var eatSoundLoader2 = new THREE.AudioLoader();
+
+//Load a sound and set it as the Audio object's buffer
+eatSoundLoader2.load("sounds/eat2.mp3", function (buffer) {
+  eatSound2.setBuffer(buffer);
+  eatSound2.setLoop(false);
+  eatSound2.setVolume(0.2);
+});
+
+/////////
+var heartSound = new THREE.Audio(listener);
+
+var heartSoundLoader = new THREE.AudioLoader();
+
+//Load a sound and set it as the Audio object's buffer
+heartSoundLoader.load("sounds/glass.wav", function (buffer) {
+  heartSound.setBuffer(buffer);
+  heartSound.setLoop(false);
+  heartSound.setVolume(1);
+});
 camera.target = targetObject;
 // Controls
 const controls = new OrbitControls(camera, canvas);
@@ -459,6 +606,15 @@ renderer.setClearColor("black", 0.5);
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+//play randomEatSound
+function playRandomEatSound() {
+  var randomSound = Math.floor(Math.random() * 2);
+  if (randomSound == 1) {
+    eatSound1.play();
+  } else {
+    eatSound2.play();
+  }
+}
 /**
  * Animate
  */
@@ -469,10 +625,35 @@ const clock = new THREE.Clock();
 let previousTime = 0;
 const raycaster = new THREE.Raycaster();
 
+function openLetter(){
+  var letter = $("<div>")
+  letter.addClass("letter");
+  letter.html("CONTRATS!!!!")
+  $("body").append(letter);
+
+
+}
+
 $(window).click(() => {
+
+  //goldHeart
+
+  if(goldHeartIntersects.length>0 && goldHeartTrigger=="on"){
+    heartSound.play()
+    openLetter();
+    startHearts();
+  }
   //chocolate1
 
-  if (Chocolateintersect1.length > 0 && chocolatesTrigger === "on") {
+  if (
+    Chocolateintersect1.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate1Trigger === "on"
+  ) {
+    createStars(mouseX, mouseY)
+
+    playRandomEatSound();
+
     // console.log(chocolate1);
     chocolate1.children[6].children[0].material = transparentMaterialchocolate1;
     chocolate1.children[6].children[1].material = transparentMaterialchocolate1;
@@ -495,8 +676,14 @@ $(window).click(() => {
 
   //chocolate2
 
-  if (Chocolateintersect2.length > 0 && chocolatesTrigger === "on") {
-    console.log(chocolate2);
+  if (
+    Chocolateintersect2.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate2Trigger == "on"
+  ) {
+    createStars(mouseX, mouseY)
+;
+    playRandomEatSound();
     chocolate2.children[3].children[0].material = transparentMaterialchocolate2;
     chocolate2.children[3].children[1].material = transparentMaterialchocolate2;
     transparentMaterialchocolate2.transparent = true;
@@ -517,8 +704,14 @@ $(window).click(() => {
   }
 
   //chocolare3
-  if (Chocolateintersect3.length > 0 && chocolatesTrigger === "on") {
-    console.log(chocolate3);
+  if (
+    Chocolateintersect3.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate3Trigger == "on"
+  ) {
+    createStars(mouseX, mouseY)
+;
+    playRandomEatSound();
     chocolate3.children[3].children[0].material = transparentMaterialchocolate3;
     chocolate3.children[3].children[1].material = transparentMaterialchocolate3;
     transparentMaterialchocolate3.transparent = true;
@@ -539,8 +732,14 @@ $(window).click(() => {
   }
 
   //chocolate4
-  if (Chocolateintersect4.length > 0 && chocolatesTrigger === "on") {
-    console.log(chocolate4);
+  if (
+    Chocolateintersect4.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate4Trigger == "on"
+  ) {
+    createStars(mouseX, mouseY)
+;
+    playRandomEatSound();
     chocolate4.children[0].children[0].material = transparentMaterialchocolate4;
     chocolate4.children[0].children[1].material = transparentMaterialchocolate4;
     transparentMaterialchocolate4.transparent = true;
@@ -561,8 +760,14 @@ $(window).click(() => {
   }
 
   //chocolate5
-  if (Chocolateintersect5.length > 0 && chocolatesTrigger === "on") {
-    // console.log(chocolate5);
+  if (
+    Chocolateintersect5.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate5Trigger == "on"
+  ) {
+    createStars(mouseX, mouseY)
+;
+    playRandomEatSound();
     chocolate5.children[2].children[0].material = transparentMaterialchocolate5;
     chocolate5.children[2].children[1].material = transparentMaterialchocolate5;
     transparentMaterialchocolate5.transparent = true;
@@ -584,8 +789,14 @@ $(window).click(() => {
   }
 
   //chocolate6
-  if (Chocolateintersect6.length > 0 && chocolatesTrigger === "on") {
-    // console.log(chocolate6);
+  if (
+    Chocolateintersect6.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate6Trigger == "on"
+  ) {
+    createStars(mouseX, mouseY)
+;
+    playRandomEatSound();
     chocolate6.children[3].children[0].material = transparentMaterialchocolate6;
     chocolate6.children[3].material = transparentMaterialchocolate6;
     transparentMaterialchocolate6.transparent = true;
@@ -606,8 +817,14 @@ $(window).click(() => {
   }
 
   //chocolate7
-  if (Chocolateintersect7.length > 0 && chocolatesTrigger === "on") {
-    console.log(chocolate7);
+  if (
+    Chocolateintersect7.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate7Trigger == "on"
+  ) {
+    createStars(mouseX, mouseY)
+;
+    playRandomEatSound();
     chocolate7.children[2].children[0].material = transparentMaterialchocolate7;
     chocolate7.children[2].children[1].material = transparentMaterialchocolate7;
     transparentMaterialchocolate7.transparent = true;
@@ -620,15 +837,21 @@ $(window).click(() => {
       duration: 0.3,
       opacity: 0,
     });
-    gsap.to(chocolate7.children[3].children[1].material, {
+    gsap.to(chocolate7.children[2].children[1].material, {
       duration: 0.3,
       opacity: 0,
     });
     chocolate7Trigger = "off";
   }
   //chocolate8
-  if (Chocolateintersect8.length > 0 && chocolatesTrigger === "on") {
-    // console.log(chocolate8);
+  if (
+    Chocolateintersect8.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate8Trigger == "on"
+  ) {
+    createStars(mouseX, mouseY)
+;
+    playRandomEatSound();
     chocolate8.children[2].children[0].material = transparentMaterialchocolate8;
     chocolate8.children[2].children[1].material = transparentMaterialchocolate8;
     transparentMaterialchocolate8.transparent = true;
@@ -649,7 +872,14 @@ $(window).click(() => {
   }
 
   //chocolate9
-  if (Chocolateintersect9.length > 0 && chocolatesTrigger === "on") {
+  if (
+    Chocolateintersect9.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate9Trigger == "on"
+  ) {
+    createStars(mouseX, mouseY)
+;
+    playRandomEatSound();
     chocolate9.children[3].children[0].material = transparentMaterialchocolate9;
     chocolate9.children[3].children[1].material = transparentMaterialchocolate9;
     transparentMaterialchocolate9.transparent = true;
@@ -670,8 +900,14 @@ $(window).click(() => {
   }
 
   //chocolate10
-  if (Chocolateintersect10.length > 0 && chocolatesTrigger === "on") {
-    console.log(chocolate10);
+  if (
+    Chocolateintersect10.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate10Trigger == "on"
+  ) {
+    createStars(mouseX, mouseY)
+;
+    playRandomEatSound();
     chocolate10.children[4].children[0].material =
       transparentMaterialchocolate10;
     chocolate10.children[4].children[1].material =
@@ -693,7 +929,14 @@ $(window).click(() => {
     chocolate10Trigger = "off";
   }
   //chocolate11
-  if (Chocolateintersect11.length > 0 && chocolatesTrigger === "on") {
+  if (
+    Chocolateintersect11.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate11Trigger == "on"
+  ) {
+    createStars(mouseX, mouseY)
+;
+    playRandomEatSound();
     chocolate11.children[3].children[0].material =
       transparentMaterialchocolate11;
     chocolate11.children[3].children[1].material =
@@ -717,8 +960,14 @@ $(window).click(() => {
   }
 
   //chocolate12
-  if (Chocolateintersect12.length > 0 && chocolatesTrigger === "on") {
-    console.log(chocolate12);
+  if (
+    Chocolateintersect12.length > 0 &&
+    chocolatesTrigger === "on" &&
+    chocolate12Trigger == "on"
+  ) {
+    createStars(mouseX, mouseY)
+;
+    playRandomEatSound();
     chocolate12.children[3].children[0].material =
       transparentMaterialchocolate12;
     chocolate12.children[3].material = transparentMaterialchocolate12;
@@ -740,7 +989,13 @@ $(window).click(() => {
     chocolate12Trigger = "off";
   }
 
-  if (lidIntersects.length > 0 && lidTrigger === "on") {
+  if (
+    lidIntersects.length > 0 &&
+    lidTrigger === "on" &&
+    chocolatesTrigger == "off"
+  ) {
+    lidNudgeTrigger = "off";
+    lidSound.play();
     gsap.to(lid.position, { duration: 0.8, y: 1.5 });
     setTimeout(() => {
       lid.material = transparentMaterial2;
@@ -748,9 +1003,9 @@ $(window).click(() => {
       chocolatesTrigger = "on";
     }, 200);
   }
-  if (RibbonIntersects.length > 0) {
-    // ribbonAnimation.play()
+  if (RibbonIntersects.length > 0 && lidTrigger == "off") {
     ribbonTrigger = "on";
+    ribbonSound.play();
     setTimeout(() => {
       ribbon.children[1].material = transparentMaterial;
       bow.material = transparentMaterial;
@@ -758,30 +1013,11 @@ $(window).click(() => {
       gsap.to(bow.position, { duration: 0.8, y: 1.5 });
 
       gsap.to(ribbon.children[1].material, { duration: 0.8, opacity: 0 });
-
-      // console.log(ribbon.children[1].material)
     }, 10);
     setTimeout(() => {
       lidTrigger = "on";
     }, 200);
   }
-  // if(intersects.length>0){
-  //     if(play==="on"){
-  //     createSingleSet(CANNON, THREE, intersects,defaultMaterial, singleGroup,scene, world, objectsToUpdate,plateArray)
-  //     }
-  //     else if(createSinglesetProperTrigger==="on"){
-  //     createSingleSetProper(CANNON, THREE, intersects,defaultMaterial, singleGroup,scene, world, objectsToUpdate,plateArray)
-  //     createSinglesetProperTrigger="off"
-  //     singleSetDisplay="off"
-  //     singleGroup.visible=false
-  //     $(".menue").addClass("invisibleP")
-  //     $(".monitor").removeClass("invisibleP")
-  //     teaSetTriggers[currentTrigger]="off"
-  //     }
-  // }
-  // if(plateIntersects.length>0){
-  //     createMacaroon(plateIntersects[0])
-  // }
 });
 
 const tick = () => {
@@ -831,9 +1067,9 @@ const tick = () => {
     RibbonIntersects = raycaster.intersectObject(ribbon);
   }
 
-    if (GoldHeart) {
-      goldHeartIntersects = raycaster.intersectObject(GoldHeart);
-    }
+  if (GoldHeart) {
+    goldHeartIntersects = raycaster.intersectObject(GoldHeart);
+  }
   //   if()
 
   const elapsedTime = clock.getElapsedTime();

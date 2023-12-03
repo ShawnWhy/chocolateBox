@@ -133,3 +133,81 @@ a{
     color:white;
     text-decoration:none
 }
+
+.star{
+    position:absolute;
+    animation:fadeaway .9s both
+}
+
+@keyframes fadeaway {
+    0%{opacity:1}
+    100%{opacity:0}
+}
+
+.heartContainer{
+ height:50px;
+ width:50px;
+  transform-style: preserve-3d;
+  animation: turnHeart 1s linear infinite;
+  border-radius: 6px;
+  position: absolute;
+}
+
+
+
+.heartFront {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transform-origin: center;
+  /* transform:rotateZ() */
+  z-index: 1;
+  background-image: url("/static/Heart.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.heartBack {
+  height: 100%;
+  width: 100%;
+  transform-origin: center;
+  background-image: url("/static/Heart2.svg");
+  position: absolute;
+  transform: rotateY(180deg) translateZ(-1px);
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 6px;
+}
+
+
+@keyframes turnHeart{
+
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+}
+}
+
+.letter{
+    height:100%;
+    width:80%;
+    background-color: antiquewhite;
+    border-radius:5px;
+    animation:letterUp .5s both;
+    text-align:center;
+    padding:30px;
+    margin-top:20px;
+    margin-left:10%;
+    position:absolute;
+
+}
+
+@keyframes letterUp{
+   0%{top:100%}
+   100%{top:0%}
+
+}
